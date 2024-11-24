@@ -24,11 +24,11 @@ return new class extends Migration
             $table->datetime('estimated_delivery')->required();
             $table->timestamps();
 
-            $table->foreign('client_id')->references('id')->on('clients')
+            $table->foreign('client_id')->references('id')->on('users')
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
 
-            $table->foreign('transporter_id')->references('id')->on('transporters')
+            $table->foreign('transporter_id')->references('id')->on('users')
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
 

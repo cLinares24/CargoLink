@@ -4,14 +4,14 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Client extends Model
+class Client extends User
 {
-    protected $fillable = [
-        'user_id'
-    ];
-    // Relación con el modelo User
-    public function user()
+    protected $table = 'users'; // Usan la misma tabla
+
+    protected static function booted()
     {
-        return $this->belongsTo(User::class);
+        static::addGlobalScope('client', function ($query) {
+            $query->where('type', 'client');
+        });
     }
 }
