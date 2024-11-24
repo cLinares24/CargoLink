@@ -13,7 +13,6 @@ return new class extends Migration
     {
         Schema::create('pays', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->required();
             $table->foreignId('shipment_id')->required();
             $table->string('payment_method')->required();
             $table->string('status')->required();

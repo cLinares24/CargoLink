@@ -19,12 +19,12 @@ return new class extends Migration
             $table->string('source_address')->required();
             $table->string('destination_address')->required();
             $table->string('status')->required();
-            $table->integer('amount')->required();
+            $table->float('amount')->required();
             $table->datetime('creation_date')->required();
             $table->datetime('estimated_delivery')->required();
             $table->timestamps();
 
-            $table->foreign('client_id')->references('id')->on('client')
+            $table->foreign('client_id')->references('id')->on('clients')
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
 

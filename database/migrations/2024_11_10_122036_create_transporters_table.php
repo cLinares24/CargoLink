@@ -13,9 +13,12 @@ return new class extends Migration
     {
         Schema::create('transporters', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->required()->max(50); 
-            $table->string('transportType')->required()->max(255); 
+            $table->foreignId('user_id')->required();
             $table->timestamps();
+
+            $table->foreign('user_id')->references('id')->on('users')
+            ->onDelete('cascade')
+            ->onUpdate('cascade');
         });
     }
 

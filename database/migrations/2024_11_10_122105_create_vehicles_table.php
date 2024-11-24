@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('vehicles', function (Blueprint $table) {
             $table->id();
             $table->foreignId('transport_id')->required();
-            $table->string('license_plate')->required()->max(8);
-            $table->string('transportType')->required()->max(255);
+            $table->string('license_plate')->required()->max(10);
+            $table->string('transport_type')->required()->max(255);
             $table->string('brand')->required()->max(50);
             $table->string('model')->required()->max(50);
             $table->integer('year')->required();

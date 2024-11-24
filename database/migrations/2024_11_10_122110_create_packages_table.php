@@ -15,9 +15,9 @@ return new class extends Migration
             $table->id();
             $table->string('description')->required();
             $table->float('weight')->required();
-            $table->string('dimensions')->required();
+            $table->float('height')->required();
+            $table->float('width')->required();
             $table->string('declared_value')->required();
-            $table->string('destination')->required();
             $table->timestamps();
         });
     }
