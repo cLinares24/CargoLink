@@ -20,9 +20,10 @@ class ClientController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request, UserController $userController)
     {
-        //
+        $request->merge(['type' => 'client']);
+        return $userController->store($request);
     }
 
     /**
@@ -36,10 +37,10 @@ class ClientController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UserStoreRequest $request, Client $client)
+    public function update(UserStoreRequest $request, Client $client, UserController $userController)
     {
-        $client->update($request->validated());
-        return response()->json(['data' => $client], 200);
+        $request->merge(['type' => 'client']);
+        return $userController->update($request, $client);
     }
 
     /**

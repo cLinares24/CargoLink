@@ -27,18 +27,19 @@ class UserController extends Controller
      */
     public function store(UserStoreRequest $request)
     {
-        $user = User::create($request->validated());
-         // Determinar el tipo de usuario
+        $userData = $request->validated();
         $type = $request->input('type'); // 'client' o 'transporter'
 
         if ($type === 'client') {
-            $user = Client::create($request->validated());
+            $userData['type'] = 'client';
+            $user = Client::create($userData); // Usa el modelo Client con el scope
         } elseif ($type === 'transporter') {
-            $user = Transporter::create($request->validated());
+            $userData['type'] = 'transporter';
+            $user = Transporter::create($userData); // Usa el modelo Transporter con el scope
         } else {
             return response()->json(['error' => 'Invalid user type'], 400);
         }
-        
+
         return response()->json(['data' => $user], 201);
 
     }

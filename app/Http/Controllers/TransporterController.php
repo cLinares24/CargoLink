@@ -21,9 +21,10 @@ class TransporterController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request, UserController $userController)
     {
-        //
+        $request->merge(['type' => 'transporter']); // Agregar el tipo al request
+        return $userController->store($request); // Delegar al UserController
     }
 
     /**
@@ -37,10 +38,10 @@ class TransporterController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UserStoreRequest $request, Transporter $transporter)
+    public function update(UserStoreRequest $request, Transporter $transporter, UserController $userController)
     {
-        $transporter->update($request->validated());
-        return response()->json(['data' => $transporter], 200);
+        $request->merge(['type' => 'transporter']);
+        return $userController->update($request, $transporter);
     }
 
     /**
