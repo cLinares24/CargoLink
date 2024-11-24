@@ -12,14 +12,14 @@ class Package extends Model
     protected $fillable = [
         'description',
         'weight',
-        'dimensions',
+        'height',
+        'width',
         'declared_value',
-        'destination',
         'status',
     ];
 
     // Relación con el modelo Shipment
-    public function shipments()
+    public function shipment()
     {
         return $this->hasMany(Shipment::class);
     }

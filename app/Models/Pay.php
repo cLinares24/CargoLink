@@ -10,7 +10,6 @@ class Pay extends Model
 
     // Especifica los atributos que se pueden asignar masivamente
     protected $fillable = [
-        'name',
         'shipment_id',
         'payment_method',
         'status',
