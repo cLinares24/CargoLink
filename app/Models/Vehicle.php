@@ -11,7 +11,7 @@ class Vehicle extends Model
     protected $fillable = [
         'transport_id',
         'license_plate',
-        'transportType',
+        'transport_type',
         'brand',
         'model',
         'year',
