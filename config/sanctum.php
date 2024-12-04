@@ -27,8 +27,8 @@ return [
     |--------------------------------------------------------------------------
     |
     | This array contains the authentication guards that will be checked when
-    | Sanctum is trying to authenticate a request. If none of these guards
-    | are able to authenticate the request, Sanctum will use the bearer
+    | Sanctum is trying to  a request. If none of these guards
+    | are able to  the request, Sanctum will use the bearer
     | token that's present on an incoming request for authentication.
     |
     */
@@ -75,7 +75,7 @@ return [
     */
 
     'middleware' => [
-        'authenticate_session' => Laravel\Sanctum\Http\Middleware\AuthenticateSession::class,
+        '_session' => Laravel\Sanctum\Http\Middleware\Session::class,
         'encrypt_cookies' => Illuminate\Cookie\Middleware\EncryptCookies::class,
         'validate_csrf_token' => Illuminate\Foundation\Http\Middleware\ValidateCsrfToken::class,
     ],
