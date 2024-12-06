@@ -37,4 +37,16 @@ class Shipment extends Model
      {
          return $this->belongsTo(Package::class);
      }
+
+     // Relación con el modelo Pay
+     public function pay()
+     {
+         return $this->hasOne(Pay::class);
+     }
+
+     // Relación con el modelo Review
+     public function review()
+     {
+         return $this->hasOne(Review::class);
+     }
 }
