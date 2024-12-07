@@ -7,13 +7,12 @@ use Illuminate\Support\Facades\Http;
 class GeocodingService
 {
     protected $baseUrl = 'https://maps.googleapis.com/maps/api/geocode/json';
-    protected $apiKey = 'AIzaSyCHRfgU4LTFg08XRlc-_RY45MIMo7lCuVc';
-    //protected $apiKey;
-
-    /*public function __construct()
+    protected $apiKey;
+    
+    public function __construct()
     {
         $this->apiKey = env('GEOCODING_API_KEY');
-    }*/
+    }
 
     public function geocode($address)
     {
