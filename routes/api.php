@@ -19,3 +19,6 @@ Route::apiResource('/packages', PackageController::class);
 Route::apiResource('/shipment', ShipmentController::class);
 Route::apiResource('/pays', PayController::class);
 Route::apiResource('/reviews', ReviewController::class);
+
+Route::get('shipment/{shipment}/status', [ShipmentController::class, 'getStatus']);
+Route::put('shipment/{shipment}/status', [ShipmentController::class, 'setStatus']);

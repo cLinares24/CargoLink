@@ -29,7 +29,7 @@ class VehicleStoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'transporter_id' => 'required|exists:transporters,id',
+            'transporter_id' => 'required|exists:users,id',
             'license_plate' => 'required|string|unique:vehicles,license_plate|max:10',
             'transport_type' => 'required|string|in:truck,car,pick-up,4x4,van,motorcycle',
             'brand' => 'required|string|max:50',

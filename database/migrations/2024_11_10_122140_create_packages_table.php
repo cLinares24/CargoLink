@@ -13,12 +13,17 @@ return new class extends Migration
     {
         Schema::create('packages', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('shipment_id')->required();
             $table->string('description')->required();
             $table->float('weight')->required();
             $table->float('height')->required();
             $table->float('width')->required();
             $table->string('declared_value')->required();
             $table->timestamps();
+
+            $table->foreign('shipment_id')->references('id')->on('shipments')
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
         });
     }
 

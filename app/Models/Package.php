@@ -10,6 +10,7 @@ class Package extends Model
 
     // Especifica los atributos que se pueden asignar masivamente
     protected $fillable = [
+        'shipment_id',
         'description',
         'weight',
         'height',
@@ -18,9 +19,8 @@ class Package extends Model
         'status',
     ];
 
-    // Relación con el modelo Shipment
     public function shipment()
     {
-        return $this->hasMany(Shipment::class);
+        return $this->belongsTo(Shipment::class, 'shipment_id');
     }
 }
