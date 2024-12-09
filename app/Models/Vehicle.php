@@ -9,7 +9,7 @@ class Vehicle extends Model
     protected $table = 'vehicles';
 
     protected $fillable = [
-        'transport_id',
+        'transporter_id',
         'license_plate',
         'transport_type',
         'brand',

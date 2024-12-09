@@ -28,6 +28,7 @@ class PackageStoreRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'shipment_id' => 'required|exists:shipments,id',
             'description' => 'required|string|max:200',
             'weight' => 'required|numeric|min:0',
             'height' => 'required|numeric|min:0',

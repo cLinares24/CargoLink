@@ -15,12 +15,11 @@ return new class extends Migration
             $table->id();
             $table->foreignId('client_id')->required();
             $table->foreignId('transporter_id')->required();
-            $table->foreignId('package_id')->required();
             $table->string('source_address')->required();
             $table->string('destination_address')->required();
             $table->string('status')->required();
+            $table->string('current_address')->nullable();
             $table->float('amount')->required();
-            $table->datetime('creation_date')->required();
             $table->datetime('estimated_delivery')->required();
             $table->timestamps();
 
@@ -29,10 +28,6 @@ return new class extends Migration
                 ->onUpdate('cascade');
 
             $table->foreign('transporter_id')->references('id')->on('users')
-                ->onDelete('cascade')
-                ->onUpdate('cascade');
-
-            $table->foreign('package_id')->references('id')->on('packages')
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
         });

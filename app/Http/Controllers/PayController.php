@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Pay;
 use Illuminate\Http\Request;
 use App\Http\Requests\PayStoreRequest;
+use App\Http\Requests\PayUpdateRequest;
 
 class PayController extends Controller
 {
@@ -37,7 +38,7 @@ class PayController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(PayStoreRequest $request, Pay $pay)
+    public function update(PayUpdateRequest $request, Pay $pay)
     {
         $pay->update($request->validated());
         return response()->json(['data' => $pay], 200);

@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Transporter;
 use Illuminate\Http\Request;
 use App\Http\Requests\UserStoreRequest;
+use App\Http\Requests\UserUpdateRequest;
+use App\Models\Vehicle;
 
 class TransporterController extends Controller
 {
@@ -21,9 +23,9 @@ class TransporterController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request, UserController $userController)
+    public function store(UserStoreRequest $request, UserController $userController)
     {
-        $request->merge(['type' => 'transporter']); // Agregar el tipo al request
+        
         return $userController->store($request); // Delegar al UserController
     }
 
@@ -38,9 +40,8 @@ class TransporterController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UserStoreRequest $request, Transporter $transporter, UserController $userController)
+    public function update(UserUpdateRequest $request, Transporter $transporter, UserController $userController)
     {
-        $request->merge(['type' => 'transporter']);
         return $userController->update($request, $transporter);
     }
 
@@ -52,4 +53,19 @@ class TransporterController extends Controller
         $transporter->delete();
         return response()->json(null, 204);
     }
+
+    public function getVehicles(Transporter $transporter)
+    {
+        // Obtiene los packages asociados al shipment
+        $vehicles = $transporter->vehicles;
+
+        return response()->json(['data' => $vehicles], 200);
+    }
+
+    public function getShipments(Transporter $transporter, UserController $userController)
+    {
+        // Obtiene los shipments asociados al transporter
+        return $userController->getShipments($transporter);
+    }
 }
+

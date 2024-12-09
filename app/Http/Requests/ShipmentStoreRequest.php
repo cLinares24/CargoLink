@@ -28,15 +28,13 @@ class ShipmentStoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'client_id' => 'required|exists:clients,id',
-            'transporter_id' => 'required|exists:transportists,id',
-            'package_id' => 'required|exists:packages,id',
+            'client_id' => 'required|exists:users,id',
+            'transporter_id' => 'required|exists:users,id',
             'source_address' => 'required|string|max:200',
             'destination_address' => 'required|string|max:200',
-            'status' => 'required|string|in:pending,shipped,delivered,canceled',
+            'status' => 'required|string|in:pending,delivered,canceled',
             'amount' => 'required|numeric|min:0',
-            'creation_date' => 'required|date', 
-            'estimated_delivery' => 'required|date|after_or_equal:creation_date',
+            'estimated_delivery' => 'required|date|after_or_equal:created_at',
         ];
     }
 }

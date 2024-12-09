@@ -11,10 +11,10 @@ class Shipment extends Model
     protected $fillable = [
         'client_id',
         'transporter_id',
-        'package_id',
         'source_address',
         'destination_address',
         'status',
+        'current_address',
         'amount',
         'creation_date',
         'estimated_delivery',
@@ -32,11 +32,11 @@ class Shipment extends Model
          return $this->belongsTo(Transporter::class);
      }
  
-     // Relación con el modelo Package
-     public function package()
-     {
-         return $this->belongsTo(Package::class);
-     }
+    // Relación con el modelo Shipment
+    public function packages()
+    {
+        return $this->hasMany(Package::class);
+    }
 
      // Relación con el modelo Pay
      public function pay()
