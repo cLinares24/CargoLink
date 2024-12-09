@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Review;
 use Illuminate\Http\Request;
 use App\Http\Requests\ReviewStoreRequest;
+use App\Http\Requests\ReviewUpdateRequest;
 
 class ReviewController extends Controller
 {
@@ -37,7 +38,7 @@ class ReviewController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(ReviewStoreRequest $request, Review $review)
+    public function update(ReviewUpdateRequest $request, Review $review)
     {
         $review->update($request->validated());
         return response()->json(['data' => $review], 200);

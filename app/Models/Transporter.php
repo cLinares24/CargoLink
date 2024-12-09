@@ -16,7 +16,7 @@ class Transporter extends User
     }
     
     // Relación con el modelo Vehicle
-    public function vehicle()
+    public function vehicles()
     {
         return $this->hasMany(Vehicle::class);
     }

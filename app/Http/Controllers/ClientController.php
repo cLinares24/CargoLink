@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Client;
 use Illuminate\Http\Request;
 use App\Http\Requests\UserStoreRequest;
+use App\Http\Requests\UserUpdateRequest;
 
 class ClientController extends Controller
 {
@@ -20,10 +21,10 @@ class ClientController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request, UserController $userController)
+    public function store(UserStoreRequest $request, UserController $userController)
     {
-        $request->merge(['type' => 'client']);
-        return $userController->store($request);
+        
+        return $userController->store($request); // Delegar al UserController
     }
 
     /**
@@ -37,9 +38,8 @@ class ClientController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UserStoreRequest $request, Client $client, UserController $userController)
+    public function update(UserUpdateRequest $request, Client $client, UserController $userController)
     {
-        $request->merge(['type' => 'client']);
         return $userController->update($request, $client);
     }
 
@@ -50,5 +50,11 @@ class ClientController extends Controller
     {
         $client->delete();
         return response()->json(null, 204);
+    }
+
+    public function getShipments(Client $client, UserController $userController)
+    {
+        // Obtiene los shipments asociados al client
+        return $userController->getShipments($client);
     }
 }

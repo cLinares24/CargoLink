@@ -47,4 +47,10 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    // Relación con el modelo Shipment
+    public function shipments()
+    {
+        return $this->hasMany(Shipment::class);
+    }
 }
