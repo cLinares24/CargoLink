@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Vehicle;
 use Illuminate\Http\Request;
 use App\Http\Requests\VehicleStoreRequest;
+use App\Http\Requests\VehicleUpdateRequest;
 
 class VehicleController extends Controller
 {
@@ -37,7 +38,7 @@ class VehicleController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(VehicleStoreRequest $request, Vehicle $vehicle)
+    public function update(VehicleUpdateRequest $request, Vehicle $vehicle)
     {
         $vehicle->update($request->validated());
         return response()->json(['data' => $vehicle], 200);
@@ -50,5 +51,13 @@ class VehicleController extends Controller
     {
         $vehicle->delete();
         return response()->json(null, 204);
+    }
+
+    public function indexByTransportType($transport_type)
+    {
+        // Obtener los shipments con el estado especificado
+        $vehicles = Vehicle::where('transport_type', $transport_type)->get();
+
+        return response()->json(['data' => $vehicles], 200);
     }
 }

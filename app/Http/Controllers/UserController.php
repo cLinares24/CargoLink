@@ -7,6 +7,7 @@ use App\Models\Client;
 use App\Models\Transporter;
 use Illuminate\Http\Request;
 use App\Http\Requests\UserStoreRequest;
+use App\Http\Requests\UserUpdateRequest;
 
 class UserController extends Controller
 {
@@ -56,7 +57,7 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UserStoreRequest $request, User $user)
+    public function update(UserUpdateRequest $request, User $user)
     {
         $user->update($request->validated());
         return response()->json(['data' => $user], 200);
@@ -69,5 +70,13 @@ class UserController extends Controller
     {
         $user->delete();
         return response()->json(null, 204);
+    }
+
+    public function getShipments(User $user)
+    {
+        // Obtiene los packages asociados al shipment
+        $shipments = $user->shipments;
+
+        return response()->json(['data' => $shipments], 200);
     }
 }

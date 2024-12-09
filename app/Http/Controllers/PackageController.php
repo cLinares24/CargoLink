@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\PackageStoreRequest;
+use App\Http\Requests\PackageUpdateRequest;
 use App\Models\Package;
 use Illuminate\Http\Request;
 
@@ -37,7 +38,7 @@ class PackageController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(PackageStoreRequest $request, Package $package)
+    public function update(PackageUpdateRequest $request, Package $package)
     {
         $package->update($request->validated());
         return response()->json(['data' => $package], 200);

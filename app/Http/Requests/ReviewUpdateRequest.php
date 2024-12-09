@@ -6,7 +6,7 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
-class ReviewStoreRequest extends FormRequest
+class ReviewUpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -28,7 +28,6 @@ class ReviewStoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'shipment_id' => 'required|exists:shipments,id',
             'rating' => 'required|integer|min:1|max:5',
             'date' => 'required|date|after_or_equal:created_at',
         ];

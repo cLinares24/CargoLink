@@ -33,7 +33,7 @@ class Shipment extends Model
      }
  
     // Relación con el modelo Shipment
-    public function package()
+    public function packages()
     {
         return $this->hasMany(Package::class);
     }
