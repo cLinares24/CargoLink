@@ -431,9 +431,9 @@
             'dev_requirement' => true,
         ),
         'laravel/sanctum' => array(
-            'pretty_version' => 'v4.0.4',
-            'version' => '4.0.4.0',
-            'reference' => '819782c75aaf2b08da1765503893bd2b8023d3b3',
+            'pretty_version' => 'v4.0.5',
+            'version' => '4.0.5.0',
+            'reference' => 'fe361b9a63407a228f884eb78d7217f680b50140',
             'type' => 'library',
             'install_path' => __DIR__ . '/../laravel/sanctum',
             'aliases' => array(),
