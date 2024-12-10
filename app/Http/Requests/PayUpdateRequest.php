@@ -29,8 +29,10 @@ class PayUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'payment_method' => 'string|in:credit_card,debit_card,cash,PSE,PayPal',
+            'transaction_id' => 'unique:pays',
             'status' => 'string|in:pending,completed,failed,canceled',
+            'amount' => 'numeric|min:0',
+            'payment_method' => 'string|in:credit_card,debit_card,cash,PSE,PayPal',
         ];
     }
 }

@@ -14,8 +14,10 @@ return new class extends Migration
         Schema::create('pays', function (Blueprint $table) {
             $table->id();
             $table->foreignId('shipment_id')->required();
-            $table->string('payment_method')->required();
+            $table->string('transaction_id')->required();
             $table->string('status')->required();
+            $table->float('amount')->required();
+            $table->string('payment_method')->nullable();
             $table->timestamps();
             
             $table->foreign('shipment_id')->references('id')->on('shipments')

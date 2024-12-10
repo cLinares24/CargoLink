@@ -11,8 +11,10 @@ class Pay extends Model
     // Especifica los atributos que se pueden asignar masivamente
     protected $fillable = [
         'shipment_id',
-        'payment_method',
+        'transaction_id',
         'status',
+        'amount',
+        'payment_method',
     ];
 
     // Relación con el modelo Shipment

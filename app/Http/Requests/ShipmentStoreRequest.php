@@ -33,7 +33,6 @@ class ShipmentStoreRequest extends FormRequest
             'source_address' => 'required|string|max:200',
             'destination_address' => 'required|string|max:200',
             'status' => 'required|string|in:pending,delivered,canceled',
-            'amount' => 'required|numeric|min:0',
             'estimated_delivery' => 'required|date|after_or_equal:created_at',
         ];
     }

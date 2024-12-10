@@ -19,7 +19,6 @@ return new class extends Migration
             $table->string('destination_address')->required();
             $table->string('status')->required();
             $table->string('current_address')->nullable();
-            $table->float('amount')->required();
             $table->datetime('estimated_delivery')->required();
             $table->timestamps();
 

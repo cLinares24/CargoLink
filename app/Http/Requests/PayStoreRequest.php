@@ -30,8 +30,7 @@ class PayStoreRequest extends FormRequest
     {
         return [
             'shipment_id' => 'required|exists:shipments,id|unique:pays',
-            'payment_method' => 'required|string|in:credit_card,debit_card,cash,PSE,PayPal',
-            'status' => 'required|string|in:pending,completed,failed,canceled',
+            'amount' => 'required|numeric|min:0',
         ];
     }
 }

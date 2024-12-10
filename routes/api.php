@@ -10,6 +10,7 @@ use App\Http\Controllers\PackageController;
 use App\Http\Controllers\ShipmentController;
 use App\Http\Controllers\PayController;
 use App\Http\Controllers\ReviewController;
+use App\Http\Controllers\MercadoPagoController;
 
 Route::apiResource('/packages', PackageController::class);
 Route::apiResource('/pays', PayController::class);
@@ -42,3 +43,8 @@ Route::get('/vehicles/type/{type}', [VehicleController::class, 'indexByTransport
 Route::apiResource('/users', UserController::class);
 Route::get('/users/{user}/shipments', [UserController::class, "getShipments"]);
 
+
+
+
+
+Route::post('/mercadopago/webhook', [PayController::class, 'webhook']);

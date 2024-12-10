@@ -32,7 +32,6 @@ class ShipmentUpdateRequest extends FormRequest
             'source_address' => 'string|max:200',
             'destination_address' => 'string|max:200',
             'status' => 'string|in:pending,delivered,canceled',
-            'amount' => 'numeric|min:0',
             'estimated_delivery' => 'date|after_or_equal:created_at',
         ];
     }

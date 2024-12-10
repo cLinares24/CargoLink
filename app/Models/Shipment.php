@@ -15,7 +15,6 @@ class Shipment extends Model
         'destination_address',
         'status',
         'current_address',
-        'amount',
         'creation_date',
         'estimated_delivery',
     ];
