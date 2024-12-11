@@ -15,6 +15,7 @@ use App\Http\Controllers\AuthController;
 //Whitout auth token
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/users', [UserController::class, 'store'])->name('users.store');
+Route::post('/mercadopago/webhook', [PayController::class, 'webhook']);
 
 //----------------------------------------------------------------------------//
 
@@ -50,7 +51,7 @@ Route::middleware(['auth:sanctum'])->group(function(){
     Route::get('/vehicles/type/{type}', [VehicleController::class, 'indexByTransportType']);
 
 
-    Route::post('/mercadopago/webhook', [PayController::class, 'webhook']);
+    
     //Users
     Route::apiResource('/users', UserController::class);
     Route::get('/users/{user}/shipments', [UserController::class, "getShipments"]);
