@@ -19,33 +19,33 @@ class Shipment extends Model
         'estimated_delivery',
     ];
 
-     // Relación con el modelo Client
-     public function client()
-     {
-         return $this->belongsTo(Client::class);
-     }
- 
-     // Relación con el modelo Transporter
-     public function transporter()
-     {
-         return $this->belongsTo(Transporter::class);
-     }
- 
+    // Relación con el modelo Client
+    public function client()
+    {
+        return $this->belongsTo(Client::class);
+    }
+
+    // Relación con el modelo Transporter
+    public function transporter()
+    {
+        return $this->belongsTo(Transporter::class);
+    }
+
     // Relación con el modelo Shipment
     public function packages()
     {
         return $this->hasMany(Package::class);
     }
 
-     // Relación con el modelo Pay
-     public function pay()
-     {
-         return $this->hasOne(Pay::class);
-     }
+    // Relación con el modelo Pay
+    public function pay()
+    {
+        return $this->hasOne(Pay::class);
+    }
 
-     // Relación con el modelo Review
-     public function review()
-     {
-         return $this->hasOne(Review::class);
-     }
+    // Relación con el modelo Review
+    public function review()
+    {
+        return $this->hasOne(Review::class);
+    }
 }

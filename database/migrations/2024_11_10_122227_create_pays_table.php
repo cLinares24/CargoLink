@@ -19,7 +19,7 @@ return new class extends Migration
             $table->float('amount')->required();
             $table->string('payment_method')->nullable();
             $table->timestamps();
-            
+
             $table->foreign('shipment_id')->references('id')->on('shipments')
                 ->onDelete('cascade')
                 ->onUpdate('cascade');

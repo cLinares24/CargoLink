@@ -7,8 +7,9 @@ use Illuminate\Support\Facades\Http;
 class GeocodingService
 {
     protected $baseUrl = 'https://maps.googleapis.com/maps/api/geocode/json';
+
     protected $apiKey;
-    
+
     public function __construct()
     {
         $this->apiKey = env('GEOCODING_API_KEY');

@@ -2,8 +2,8 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
 class VehicleUpdateRequest extends FormRequest
@@ -34,7 +34,7 @@ class VehicleUpdateRequest extends FormRequest
             'transport_type' => 'string|in:truck,car,pick-up,4x4,van,motorcycle',
             'brand' => 'string|max:50',
             'model' => 'string|max:50',
-            'year' => 'integer|digits:4|min:1900|max:' . date('Y'),
+            'year' => 'integer|digits:4|min:1900|max:'.date('Y'),
             'status' => 'string|in:active,inactive,maintenance',
         ];
     }

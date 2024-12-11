@@ -2,11 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Transporter;
-use Illuminate\Http\Request;
 use App\Http\Requests\UserStoreRequest;
 use App\Http\Requests\UserUpdateRequest;
-use App\Models\Vehicle;
+use App\Models\Transporter;
 
 class TransporterController extends Controller
 {
@@ -17,6 +15,7 @@ class TransporterController extends Controller
     {
         // Listar todos los transportadores
         $transporters = Transporter::orderBy('id', 'asc')->get();
+
         return response()->json(['data' => $transporters], 200);
     }
 
@@ -25,7 +24,6 @@ class TransporterController extends Controller
      */
     public function store(UserStoreRequest $request, UserController $userController)
     {
-        
         return $userController->store($request); // Delegar al UserController
     }
 
@@ -51,6 +49,7 @@ class TransporterController extends Controller
     public function destroy(Transporter $transporter)
     {
         $transporter->delete();
+
         return response()->json(null, 204);
     }
 
@@ -68,4 +67,3 @@ class TransporterController extends Controller
         return $userController->getShipments($transporter);
     }
 }
-

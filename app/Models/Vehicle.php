@@ -17,6 +17,7 @@ class Vehicle extends Model
         'year',
         'status',
     ];
+
     // Relación con el modelo Transporter
     public function transporter()
     {

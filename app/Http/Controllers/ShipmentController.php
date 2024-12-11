@@ -2,16 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Shipment;
-use Illuminate\Http\Request;
 use App\Http\Requests\ShipmentStoreRequest;
 use App\Http\Requests\ShipmentUpdateRequest;
+use App\Models\Shipment;
 use App\Services\GeocodingService;
-use PhpOption\None;
+use Illuminate\Http\Request;
 
 class ShipmentController extends Controller
 {
-
     protected $geocodingService;
 
     public function __construct(GeocodingService $geocodingService)
@@ -27,21 +25,18 @@ class ShipmentController extends Controller
         // Obtener los parámetros de ordenamiento desde la solicitud
         $sortBy = $request->query('sort_by', 'id'); // Campo por el que se ordena (por defecto 'id')
         $sortOrder = $request->query('sort_order', 'asc'); // Orden (por defecto 'asc')
-    
         // Validar que el campo de ordenamiento sea válido
         $validSortFields = ['id', 'name', 'created_at', 'updated_at']; // Campos válidos para ordenar
-        if (!in_array($sortBy, $validSortFields)) {
+        if (! in_array($sortBy, $validSortFields)) {
             return response()->json(['error' => 'Invalid sort field'], 400);
         }
-    
         // Validar que el orden sea válido
-        if (!in_array($sortOrder, ['asc', 'desc'])) {
+        if (! in_array($sortOrder, ['asc', 'desc'])) {
             return response()->json(['error' => 'Invalid sort order'], 400);
         }
-    
         // Obtener los shipments ordenados según los parámetros
         $shipments = Shipment::orderBy($sortBy, $sortOrder)->get();
-    
+
         return response()->json(['data' => $shipments], 200);
     }
 
@@ -51,6 +46,7 @@ class ShipmentController extends Controller
     public function store(ShipmentStoreRequest $request)
     {
         $shipment = Shipment::create($request->validated());
+
         return response()->json(['data' => $shipment], 201);
     }
 
@@ -68,6 +64,7 @@ class ShipmentController extends Controller
     public function update(ShipmentUpdateRequest $request, Shipment $shipment)
     {
         $shipment->update($request->validated());
+
         return response()->json(['data' => $shipment], 200);
     }
 
@@ -77,6 +74,7 @@ class ShipmentController extends Controller
     public function destroy(Shipment $shipment)
     {
         $shipment->delete();
+
         return response()->json(null, 204);
     }
 
@@ -86,7 +84,7 @@ class ShipmentController extends Controller
         $lat = $request->input('latitude');
         $lng = $request->input('longitude');
 
-        if (!$status) {
+        if (! $status) {
             return response()->json(['error' => 'El estado es requerido'], 400);
         }
 
@@ -95,7 +93,7 @@ class ShipmentController extends Controller
             if ($lat && $lng) {
                 $geocodeResult = $this->geocodingService->reverseGeocode($lat, $lng);
 
-                if (!isset($geocodeResult['error'])) {
+                if (! isset($geocodeResult['error'])) {
                     $shipment->status = $status;
                     $shipment->current_address = $geocodeResult['address'];
                     $shipment->save();
@@ -111,7 +109,7 @@ class ShipmentController extends Controller
 
         // Actualiza solo el estado si no es "shipped"
         $shipment->status = $status;
-        $shipment->current_address = NULL;
+        $shipment->current_address = null;
         $shipment->save();
 
         return response()->json(['data' => $shipment], 200);
@@ -125,7 +123,7 @@ class ShipmentController extends Controller
         if ($status === 'shipped' && $address) {
             $geocodeResult = $this->geocodingService->geocode($address);
 
-            if (!isset($geocodeResult['error'])) {
+            if (! isset($geocodeResult['error'])) {
                 return response()->json([
                     'status' => $status,
                     'address' => $address,

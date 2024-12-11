@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Review;
-use Illuminate\Http\Request;
 use App\Http\Requests\ReviewStoreRequest;
 use App\Http\Requests\ReviewUpdateRequest;
+use App\Models\Review;
 
 class ReviewController extends Controller
 {
@@ -15,6 +14,7 @@ class ReviewController extends Controller
     public function index()
     {
         $reviews = Review::orderBy('id', 'asc')->get();
+
         return response()->json(['data' => $reviews], 200);
     }
 
@@ -24,6 +24,7 @@ class ReviewController extends Controller
     public function store(ReviewStoreRequest $request)
     {
         $review = Review::create($request->validated());
+
         return response()->json(['data' => $review], 201);
     }
 
@@ -41,6 +42,7 @@ class ReviewController extends Controller
     public function update(ReviewUpdateRequest $request, Review $review)
     {
         $review->update($request->validated());
+
         return response()->json(['data' => $review], 200);
     }
 
@@ -50,6 +52,7 @@ class ReviewController extends Controller
     public function destroy(Review $review)
     {
         $review->delete();
+
         return response()->json(null, 204);
     }
 }

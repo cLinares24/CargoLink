@@ -23,8 +23,8 @@ return new class extends Migration
             $table->timestamps();
 
             $table->foreign('transporter_id')->references('id')->on('users')
-            ->onDelete('cascade')
-            ->onUpdate('cascade');
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
         });
     }
 

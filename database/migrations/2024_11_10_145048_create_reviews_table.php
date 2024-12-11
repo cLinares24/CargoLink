@@ -17,11 +17,11 @@ return new class extends Migration
             $table->integer('rating')->required();
             $table->datetime('date')->required();
             $table->timestamps();
-            
+
             $table->foreign('shipment_id')->references('id')->on('shipments')
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
-            });
+        });
     }
 
     /**

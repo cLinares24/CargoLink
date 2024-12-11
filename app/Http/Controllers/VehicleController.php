@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Vehicle;
-use Illuminate\Http\Request;
 use App\Http\Requests\VehicleStoreRequest;
 use App\Http\Requests\VehicleUpdateRequest;
+use App\Models\Vehicle;
 
 class VehicleController extends Controller
 {
@@ -15,6 +14,7 @@ class VehicleController extends Controller
     public function index()
     {
         $vehicles = Vehicle::orderBy('id', 'asc')->get();
+
         return response()->json(['data' => $vehicles], 200);
     }
 
@@ -24,6 +24,7 @@ class VehicleController extends Controller
     public function store(VehicleStoreRequest $request)
     {
         $vehicle = Vehicle::create($request->validated());
+
         return response()->json(['data' => $vehicle], 201);
     }
 
@@ -41,6 +42,7 @@ class VehicleController extends Controller
     public function update(VehicleUpdateRequest $request, Vehicle $vehicle)
     {
         $vehicle->update($request->validated());
+
         return response()->json(['data' => $vehicle], 200);
     }
 
@@ -50,6 +52,7 @@ class VehicleController extends Controller
     public function destroy(Vehicle $vehicle)
     {
         $vehicle->delete();
+
         return response()->json(null, 204);
     }
 

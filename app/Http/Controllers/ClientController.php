@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Client;
-use Illuminate\Http\Request;
 use App\Http\Requests\UserStoreRequest;
 use App\Http\Requests\UserUpdateRequest;
+use App\Models\Client;
 
 class ClientController extends Controller
 {
@@ -15,6 +14,7 @@ class ClientController extends Controller
     public function index()
     {
         $clients = Client::orderBy('id', 'asc')->get();
+
         return response()->json(['data' => $clients], 200);
     }
 
@@ -23,7 +23,6 @@ class ClientController extends Controller
      */
     public function store(UserStoreRequest $request, UserController $userController)
     {
-        
         return $userController->store($request); // Delegar al UserController
     }
 
@@ -49,6 +48,7 @@ class ClientController extends Controller
     public function destroy(Client $client)
     {
         $client->delete();
+
         return response()->json(null, 204);
     }
 

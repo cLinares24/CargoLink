@@ -1,17 +1,17 @@
 <?php
 
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ClientController;
+use App\Http\Controllers\PackageController;
+use App\Http\Controllers\PayController;
+use App\Http\Controllers\ReviewController;
+use App\Http\Controllers\ShipmentController;
+use App\Http\Controllers\TransporterController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\VehicleController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\UserController;
-use App\Http\Controllers\ClientController;
-use App\Http\Controllers\TransporterController;
-use App\Http\Controllers\VehicleController;
-use App\Http\Controllers\PackageController;
-use App\Http\Controllers\ShipmentController;
-use App\Http\Controllers\PayController;
-use App\Http\Controllers\MercadoPagoController;
-use App\Http\Controllers\ReviewController; 
-use App\Http\Controllers\AuthController;
+
 //Whitout auth token
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/users', [UserController::class, 'store'])->name('users.store');
@@ -20,7 +20,7 @@ Route::post('/mercadopago/webhook', [PayController::class, 'webhook']);
 //----------------------------------------------------------------------------//
 
 //Request where need tokenz
-Route::middleware(['auth:sanctum'])->group(function(){
+Route::middleware(['auth:sanctum'])->group(function () {
 
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::get('/user', [AuthController::class, 'user'])->middleware('auth:sanctum');
@@ -39,20 +39,18 @@ Route::middleware(['auth:sanctum'])->group(function(){
 
     //Clients
     Route::apiResource('/clients', ClientController::class);
-    Route::get('/client/{client}/shipments',[ClientController::class, 'getShipments']);
-    
+    Route::get('/client/{client}/shipments', [ClientController::class, 'getShipments']);
+
     //Transporters
     Route::apiResource('/transporters', TransporterController::class);
-    Route::get('/transporters/{transporter}/vehicles',[TransporterController::class, 'getVehicles']);
-    Route::get('/transporters/{transporter}/shipments',[TransporterController::class, 'getShipments']);
+    Route::get('/transporters/{transporter}/vehicles', [TransporterController::class, 'getVehicles']);
+    Route::get('/transporters/{transporter}/shipments', [TransporterController::class, 'getShipments']);
 
     //Vehicles
     Route::apiResource('/vehicles', VehicleController::class);
     Route::get('/vehicles/type/{type}', [VehicleController::class, 'indexByTransportType']);
 
-
-    
     //Users
     Route::apiResource('/users', UserController::class);
-    Route::get('/users/{user}/shipments', [UserController::class, "getShipments"]);
+    Route::get('/users/{user}/shipments', [UserController::class, 'getShipments']);
 });

@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
-use App\Models\Client;
-use App\Models\Transporter;
-use Illuminate\Http\Request;
 use App\Http\Requests\UserStoreRequest;
 use App\Http\Requests\UserUpdateRequest;
+use App\Models\Client;
+use App\Models\Transporter;
+use App\Models\User;
 
 class UserController extends Controller
 {
@@ -18,7 +17,7 @@ class UserController extends Controller
     {
         // Obtener todos los usuarios
         $users = User::orderBy('id', 'asc')->get();
-        
+
         // Retornar los usuarios en formato JSON
         return response()->json(['data' => $users], 200);
     }
@@ -60,6 +59,7 @@ class UserController extends Controller
     public function update(UserUpdateRequest $request, User $user)
     {
         $user->update($request->validated());
+
         return response()->json(['data' => $user], 200);
     }
 
@@ -69,6 +69,7 @@ class UserController extends Controller
     public function destroy(User $user)
     {
         $user->delete();
+
         return response()->json(null, 204);
     }
 

@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Http\Requests\PackageStoreRequest;
 use App\Http\Requests\PackageUpdateRequest;
 use App\Models\Package;
-use Illuminate\Http\Request;
 
 class PackageController extends Controller
 {
@@ -15,6 +14,7 @@ class PackageController extends Controller
     public function index()
     {
         $packages = Package::orderBy('id', 'asc')->get();
+
         return response()->json(['data' => $packages], 200);
     }
 
@@ -24,6 +24,7 @@ class PackageController extends Controller
     public function store(PackageStoreRequest $request)
     {
         $package = Package::create($request->validated());
+
         return response()->json(['data' => $package], 201);
     }
 
@@ -41,6 +42,7 @@ class PackageController extends Controller
     public function update(PackageUpdateRequest $request, Package $package)
     {
         $package->update($request->validated());
+
         return response()->json(['data' => $package], 200);
     }
 
@@ -50,6 +52,7 @@ class PackageController extends Controller
     public function destroy(Package $package)
     {
         $package->delete();
+
         return response()->json(null, 204);
     }
 }

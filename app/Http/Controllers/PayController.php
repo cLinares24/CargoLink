@@ -2,25 +2,20 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Pay;
-use Illuminate\Http\Request;
 use App\Http\Requests\PayStoreRequest;
 use App\Http\Requests\PayUpdateRequest;
-use Illuminate\Support\Facades\Log;
-
-
+use App\Models\Pay;
 use App\Services\MercadoPagoService;
+use Illuminate\Http\Request;
 
 class PayController extends Controller
 {
-
     protected $mercadoPagoService;
 
     public function __construct()
     {
-        $this->mercadoPagoService = new MercadoPagoService();
+        $this->mercadoPagoService = new MercadoPagoService;
     }
-
 
     /**
      * Display a listing of the resource.
@@ -28,6 +23,7 @@ class PayController extends Controller
     public function index()
     {
         $pays = Pay::orderBy('id', 'asc')->get();
+
         return response()->json(['data' => $pays], 200);
     }
 
@@ -37,7 +33,6 @@ class PayController extends Controller
     public function store(PayStoreRequest $request)
     {
         $validatedData = $request->validated();
-
 
         $response = $this->mercadoPagoService->createPaymentSession($validatedData['shipment_id'], $validatedData['amount']);
 
@@ -49,7 +44,7 @@ class PayController extends Controller
 
             // Guarda el transaction_id en la base de datos
             Pay::create([
-                'shipment_id'=> $validatedData['shipment_id'],
+                'shipment_id' => $validatedData['shipment_id'],
                 'transaction_id' => $transactionId,
                 'status' => 'pending',
                 'amount' => $validatedData['amount'],
@@ -80,6 +75,7 @@ class PayController extends Controller
     public function update(PayUpdateRequest $request, Pay $pay)
     {
         $pay->update($request->validated());
+
         return response()->json(['data' => $pay], 200);
     }
 
@@ -89,12 +85,12 @@ class PayController extends Controller
     public function destroy(Pay $pay)
     {
         $pay->delete();
+
         return response()->json(null, 204);
     }
 
     public function webhook(Request $request)
     {
-        
         // Verifica la firma si es necesario (opcional, pero recomendado)
         // $this->verifySignature($request);
 
@@ -109,7 +105,6 @@ class PayController extends Controller
 
             $payment_data = $response->json();
 
-
             if ($response->successful()) {
                 $shipment_id = $payment_data['external_reference'];
                 $status = $payment_data['status'];
@@ -120,6 +115,7 @@ class PayController extends Controller
                     $pay->status = $status; // Actualiza el estado
                     $pay->payment_method = $payment_method;
                     $pay->save(); // Guarda los cambios
+
                     return response()->json(['data' => $pay], 200);
                 }
 
@@ -135,8 +131,5 @@ class PayController extends Controller
             'details' => $payment_data,
         ], 400);
 
-        
     }
-
-    
 }
