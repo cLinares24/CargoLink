@@ -6,6 +6,8 @@ use App\Models\Pay;
 use Illuminate\Http\Request;
 use App\Http\Requests\PayStoreRequest;
 use App\Http\Requests\PayUpdateRequest;
+use Illuminate\Support\Facades\Log;
+
 
 use App\Services\MercadoPagoService;
 
@@ -37,13 +39,13 @@ class PayController extends Controller
         $validatedData = $request->validated();
 
 
-        $response = $this->mercadoPagoService->createPaymentSession($validatedData['amount']);
+        $response = $this->mercadoPagoService->createPaymentSession($validatedData['shipment_id'], $validatedData['amount']);
 
         $responseData = $response->json();
 
         if ($response->successful()) {
             $transactionId = $responseData['id']; // Captura el transaction ID devuelto por Mercado Pago
-            $paymentLink = $responseData['sandbox_init_point']; // URL para enviar al cliente
+            $paymentLink = $responseData['init_point']; // URL para enviar al cliente
 
             // Guarda el transaction_id en la base de datos
             Pay::create([
@@ -97,24 +99,44 @@ class PayController extends Controller
         // $this->verifySignature($request);
 
         // Obtén los datos del webhook
-        $data = $request->all();
+        $webhook_data = $request->all();
 
         // Asegúrate de que el evento sea el que esperas
-        if (isset($data['type']) && $data['type'] === 'payment') {
-            $transactionId = $data['data']['id']; // ID de la transacción
-            $status = $data['data']['status']; // Estado del pago
-            $payment_method = $data['data']['transaction_details']['payment_method_id'];
+        if (isset($webhook_data['type']) && $webhook_data['type'] === 'payment') {
+            $payment_id = $webhook_data['data']['id']; // ID de la transacción
 
-            // Actualiza el estado del pago en la base de datos
-            $pay = Pay::where('transaction_id', $transactionId)->first();
-            if ($pay) {
-                $pay->status = $status; // Actualiza el estado
-                $pay->payment_method = $payment_method;
-                $pay->save(); // Guarda los cambios
+            $response = $this->mercadoPagoService->getPayment($payment_id);
+
+            $payment_data = $response->json();
+
+
+            if ($response->successful()) {
+                $shipment_id = $payment_data['external_reference'];
+                $status = $payment_data['status'];
+                $payment_method = $payment_data['payment_method']['type'];
+
+                $pay = Pay::where('shipment_id', $shipment_id)->first();
+                if ($pay) {
+                    $pay->status = $status; // Actualiza el estado
+                    $pay->payment_method = $payment_method;
+                    $pay->save(); // Guarda los cambios
+                    return response()->json(['data' => $pay], 200);
+                }
+
+                return response()->json([
+                    'error' => 'No se encontro el pay asociado a shipment',
+                    'details' => $payment_data,
+                ], 404);
             }
         }
 
-        return response()->json(['status' => 'success'], 200);
+        return response()->json([
+            'error' => 'No se encontro el payment de mercado pago.',
+            'details' => $payment_data,
+        ], 400);
+
+        
     }
 
+    
 }

@@ -17,15 +17,15 @@ class MercadoPagoService
     /**
      * Crear el pago con Mercado Pago y devolver el enlace
      */
-    public function createPaymentSession($amount)
+    public function createPaymentSession($shipment_id, $amount)
     {
         $response = Http::withToken($this->accessToken)->post(
             $this->baseUrl . 'checkout/preferences',
             [
                 "items" => [
                     [
-                        "id" => "Envio",
-                        "title" => "Compra de prueba",
+                        "id" => "CargoLinkFlete",
+                        "title" => "Pago de flete",
                         "quantity" => 1,
                         "currency_id" => "COP", // Cambiar según tu moneda
                         "unit_price" => $amount,
@@ -36,10 +36,20 @@ class MercadoPagoService
                     "failure" => "https://www.mercadopago.com.co/",
                     "pending" => "https://www.mercadopago.com.co/",
                 ],
+                "external_reference" => $shipment_id,
             ]
         );
 
         
+        return $response;
+    }
+
+    public function getPayment($payment_id)
+    {
+        $response = Http::withToken($this->accessToken)->get(
+            $this->baseUrl . 'v1/payments/' . $payment_id
+        );
+
         return $response;
     }
 }
